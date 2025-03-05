@@ -1,0 +1,12 @@
+deploy:
+  needs: test
+  runs-on: ubuntu-latest
+  steps:
+    - uses: actions/checkout@v3
+    - name: Deploy to PythonAnywhere
+      run: |
+        pip install pythonanywhere
+        pa_token=${{ secrets.PYTHONANYWHERE_API_TOKEN }}
+        curl -X POST \
+          -H "Authorization: Token $pa_token" \
+          https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/webapps/${{ secrets.PA_DOMAIN }}/reload/
