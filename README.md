@@ -1,3 +1,5 @@
+# Link to Deployed Version : https://greenacademy-production.up.railway.app/swagger/
+
 # Green Academy API
 
 The Green Academy API provides backend services for an online learning platform focused on environmental sustainability and conservation education. This repository contains the Phase 1 implementation which focuses on courses and student enrollment.

@@ -16,7 +16,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-key-for-development-o
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS: List[str] = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS: List[str] = ['localhost', '127.0.0.1', 'greenacademy-production.up.railway.app', '.railway.app']
 
 # Application definition
 INSTALLED_APPS = [
