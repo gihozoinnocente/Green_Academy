@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pyc
+*.pdb
+*.egg-info/
+*.egg
+*.env
+.env
+.venv
+venv/
+build/
+dist/
+*.sqlite3
+*.db
+*.log
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.bak
+*.tmp
+# OS generated
+Thumbs.db
+Desktop.ini
+# Test and coverage
+test-results/
+.coverage
+htmlcov/
+.tox/
+.cache/
+.pytest_cache/
+# Jupyter
+.ipynb_checkpoints/
+# Node
+node_modules/
+# macOS
+*.DS_Store

@@ -1,0 +1,84 @@
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from .updated_swagger import get_swagger_spec
+
+@csrf_exempt
+from django.http import HttpRequest
+
+def swagger_ui_view(request: HttpRequest) -> HttpResponse:
+    """A simple view to serve Swagger UI documentation."""
+    # Get the complete OpenAPI spec and convert to JSON string
+    swagger_spec_json = json.dumps(get_swagger_spec())
+    
+    html_content = f"""
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Green Academy API - Swagger UI</title>
+        <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist@3/swagger-ui.css">
+    </head>
+    <body>
+        <div id="swagger-ui"></div>
+
+        <script src="https://unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js"></script>
+        <script src="https://unpkg.com/swagger-ui-dist@3/swagger-ui-standalone-preset.js"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {{
+            const spec = {swagger_spec_json};
+            
+            const ui = SwaggerUIBundle({{
+                spec: spec,
+                dom_id: '#swagger-ui',
+                deepLinking: true,
+                presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                ],
+                plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                ],
+                layout: "StandaloneLayout"
+            }});
+            window.ui = ui;
+        }});
+        </script>
+    </body>
+    </html>
+    """
+    return HttpResponse(html_content)
+
+@csrf_exempt
+def redoc_ui_view(request):
+    """A custom view to serve ReDoc UI directly with embedded schema."""
+    # Get the complete OpenAPI spec and convert to JSON string
+    swagger_spec_json = json.dumps(get_swagger_spec())
+    
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Green Academy API Documentation</title>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="shortcut icon" href="https://redocly.com/images/favicon.ico">
+        <style>
+            body {{ margin: 0; padding: 0; }}
+        </style>
+    </head>
+    <body>
+        <div id="redoc-container"></div>
+        <script src="https://unpkg.com/redoc@2.0.0-rc.55/bundles/redoc.standalone.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {{
+                Redoc.init({swagger_spec_json}, {{
+                    scrollYOffset: 50
+                }}, document.getElementById('redoc-container'))
+            }})
+        </script>
+    </body>
+    </html>
+    """
+    return HttpResponse(html_content)
